@@ -62,6 +62,7 @@ class SleepTimer
     }
   }
 
+
   fun setActive(sleepTime: Duration = sleepTimePref.value.minutes) {
     Logger.i("Starting sleepTimer. Pause in $sleepTime.")
     leftSleepTime = sleepTime
