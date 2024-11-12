@@ -187,8 +187,9 @@ class BookPlayViewModel
       if(sleepTimer.sleepTimerActive())
       {
         Logger.i("sleeping for ${sleepTimer.leftSleepTimeFlow.value}")
-        if(sleepTimer.leftSleepTimeFlow.value <= 15.minutes)
-        sleepTimer.setActive(15.minutes)
+        if(sleepTimer.leftSleepTimeFlow.value <= 15.minutes) {
+          sleepTimer.setActive(15.minutes)
+        }
       }
     }
     player.playPause()
