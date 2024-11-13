@@ -11,6 +11,7 @@ object PrefKeys {
   const val COLLECTION_BOOK_FOLDERS = "folders"
   const val DARK_THEME = "darkTheme"
   const val GRID_MODE = "gridView"
+  const val IS_ONGOING = "IS_ONGOING"
 }
 
 @Qualifier

@@ -103,6 +103,8 @@ class BookPlayController(bundle: Bundle) : ComposeController(bundle) {
             onIncrementSleepTime = viewModel::incrementSleepTime,
             onDecrementSleepTime = viewModel::decrementSleepTime,
             onAcceptSleepTime = viewModel::onAcceptSleepTime,
+            onToggleIsOngoing = viewModel::toggleIsOngoing // Add this line
+
           )
         }
       }

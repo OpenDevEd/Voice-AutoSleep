@@ -57,6 +57,8 @@ class BookPlayViewModel
   dispatcherProvider: DispatcherProvider,
   @Named(PrefKeys.SLEEP_TIME)
   private val sleepTimePref: Pref<Int>,
+  @Named(PrefKeys.IS_ONGOING)
+  private val isOngoingPref: Pref<Boolean>,
   @Assisted
   private val bookId: BookId,
 ) {
@@ -108,25 +110,30 @@ class BookPlayViewModel
   fun incrementSleepTime() {
     updateSleepTimeViewState {
       val customTime = it.customSleepTime
+      val isOngoing= it.isOngoing
       val newTime = when {
         customTime < 5 -> customTime + 1
         else -> customTime + 5
       }
       sleepTimePref.value = newTime
-      SleepTimerViewState(newTime)
+      isOngoingPref.value = isOngoing
+      SleepTimerViewState(newTime, isOngoing)
     }
   }
 
   fun decrementSleepTime() {
     updateSleepTimeViewState {
       val customTime = it.customSleepTime
+      val isOngoing= it.isOngoing
+
       val newTime = when {
         customTime <= 1 -> 1
         customTime <= 5 -> customTime - 1
         else -> (customTime - 5).coerceAtLeast(5)
       }
       sleepTimePref.value = newTime
-      SleepTimerViewState(newTime)
+      isOngoingPref.value = isOngoing
+      SleepTimerViewState(newTime, isOngoing)
     }
   }
 
@@ -145,12 +152,22 @@ class BookPlayViewModel
     }
   }
 
+  fun toggleIsOngoing(isOngoing: Boolean) {
+    updateSleepTimeViewState {
+      val customTime = it.customSleepTime
+      sleepTimePref.value = customTime
+      isOngoingPref.value = isOngoing
+      SleepTimerViewState(customTime, isOngoing)
+    }
+  }
+
   private fun updateSleepTimeViewState(update: (SleepTimerViewState) -> SleepTimerViewState?) {
     val current = dialogState.value
     val updated: SleepTimerViewState? = if (current is BookPlayDialogViewState.SleepTimer) {
       update(current.viewState)
+
     } else {
-      update(SleepTimerViewState(sleepTimePref.value))
+      update(SleepTimerViewState(sleepTimePref.value,isOngoingPref.value))
     }
     _dialogState.value = updated?.let(BookPlayDialogViewState::SleepTimer)
   }
@@ -291,7 +308,7 @@ class BookPlayViewModel
       sleepTimer.setActive(false)
       _dialogState.value = null
     } else {
-      _dialogState.value = BookPlayDialogViewState.SleepTimer(SleepTimerViewState(sleepTimePref.value))
+      _dialogState.value = BookPlayDialogViewState.SleepTimer(SleepTimerViewState(sleepTimePref.value,isOngoingPref.value))
     }
   }
 
