@@ -8,6 +8,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.datastore.core.DataStore
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -99,6 +101,7 @@ class BookPlayViewModel
       playedTime = (book.content.positionInChapter - currentMark.startMs).milliseconds,
       cover = book.content.cover?.let(::ImmutableFile),
       skipSilence = book.content.skipSilence,
+      isOngoing = isOngoingPref.value,
     )
   }
 
@@ -198,15 +201,12 @@ class BookPlayViewModel
           batteryOptimization.onBatteryOptimizationsRequested()
         }
       }
-
-    }
-    else{
-      if(sleepTimer.sleepTimerActive())
+      if(isOngoingPref.value)
       {
         Logger.i("sleeping for ${sleepTimer.leftSleepTimeFlow.value}")
-        if(sleepTimer.leftSleepTimeFlow.value <= 15.minutes) {
-          sleepTimer.setActive(15.minutes)
-        }
+
+        sleepTimer.setActive(15.minutes)
+
       }
     }
     player.playPause()

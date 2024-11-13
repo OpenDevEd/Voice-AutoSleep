@@ -16,6 +16,7 @@ import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import voice.playbackScreen.BookPlayViewState
 import voice.strings.R
 import kotlin.time.Duration
+import androidx.compose.runtime.remember
+
 
 @Composable
 internal fun BookPlayAppBar(
@@ -36,9 +39,18 @@ internal fun BookPlayAppBar(
   onVolumeBoostClick: () -> Unit,
   onCloseClick: () -> Unit,
   useLandscapeLayout: Boolean,
+
 ) {
+  val isOngoing = remember { mutableStateOf(viewState.isOngoing) }
   val appBarActions: @Composable RowScope.() -> Unit = {
-    IconButton(onClick = onSleepTimerClick) {
+    IconButton(onClick = {
+      if (viewState.sleepTime == Duration.ZERO || !isOngoing.value) {
+        onSleepTimerClick()
+      }
+      if(isOngoing.value && viewState.sleepTime != Duration.ZERO) {
+        isOngoing.value = false
+      }
+    }) {
       Icon(
         imageVector = if (viewState.sleepTime == Duration.ZERO) {
           Icons.Outlined.Bedtime
