@@ -61,27 +61,6 @@ fun SleepTimerDialog(
         textAlign = TextAlign.Center,
       )
       Spacer(modifier = Modifier.size(16.dp))
-      // create radio button for ongoing with on/off switch
-      Row(
-        modifier = Modifier
-          .fillMaxWidth()
-          .padding(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween, // Distribute space
-        verticalAlignment = Alignment.CenterVertically, // Align items vertically
-      ) {
-        Text(
-          text = stringResource(id = StringsR.string.sleep_timer_switch_is_ongoing),
-          style = MaterialTheme.typography.bodyLarge,
-        )
-
-        Switch(
-          checked = isOngoingState.value,
-          onCheckedChange = { isChecked ->
-            isOngoingState.value = isChecked
-            onToggleIsOngoing(isChecked)
-          }
-        )
-      }
 
 
       listOf(5, 15, 30, 60).forEach { time ->
@@ -120,6 +99,27 @@ fun SleepTimerDialog(
           }
         },
       )
+      Spacer(modifier = Modifier.size(16.dp))
+      Row(
+        modifier = Modifier
+          .fillMaxWidth()
+          .padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween, // Distribute space
+        verticalAlignment = Alignment.CenterVertically, // Align items vertically
+      ) {
+        Text(
+          text = stringResource(id = StringsR.string.sleep_timer_switch_is_ongoing),
+          style = MaterialTheme.typography.bodyLarge,
+        )
+
+        Switch(
+          checked = isOngoingState.value,
+          onCheckedChange = { isChecked ->
+            isOngoingState.value = isChecked
+            onToggleIsOngoing(isChecked)
+          }
+        )
+      }
       Spacer(modifier = Modifier.size(32.dp))
     }
   }

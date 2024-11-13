@@ -8,8 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.datastore.core.DataStore
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -307,6 +305,7 @@ class BookPlayViewModel
     if (sleepTimer.sleepTimerActive()) {
       sleepTimer.setActive(false)
       _dialogState.value = null
+      isOngoingPref.value = false
     } else {
       _dialogState.value = BookPlayDialogViewState.SleepTimer(SleepTimerViewState(sleepTimePref.value,isOngoingPref.value))
     }
