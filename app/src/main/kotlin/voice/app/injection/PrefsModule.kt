@@ -80,6 +80,14 @@ object PrefsModule {
 
   @Provides
   @Singleton
+  @Named(PrefKeys.IS_ONGOING)
+  fun provideIsOngoingPreference(prefs: AndroidPreferences): Pref<Boolean> {
+    return prefs.boolean(PrefKeys.IS_ONGOING, false)
+  }
+
+
+  @Provides
+  @Singleton
   @Named(PrefKeys.SINGLE_BOOK_FOLDERS)
   fun provideSingleBookFoldersPreference(prefs: AndroidPreferences): Pref<Set<String>> {
     return prefs.stringSet(PrefKeys.SINGLE_BOOK_FOLDERS, emptySet())
