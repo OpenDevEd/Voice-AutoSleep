@@ -70,13 +70,20 @@ class SleepTimer
     sleepJob?.cancel()
     sleepJob = scope.launch {
       startSleepTimerCountdown()
+      if(true)
+      {
+        setActive()
+      }
       val shakeToResetTime = 30.seconds
       Logger.d("Wait for $shakeToResetTime for a shake")
       withTimeout(shakeToResetTime) {
         shakeDetector.detect()
         Logger.i("Shake detected. Reset sleep time")
         playerController.play()
-        setActive()
+        if(false)
+        {
+          setActive()
+        }
       }
       Logger.i("exiting")
     }
