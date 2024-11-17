@@ -305,6 +305,7 @@ class BookPlayViewModel
     if (sleepTimer.sleepTimerActive()) {
       sleepTimer.setActive(false)
       _dialogState.value = null
+      isOngoingPref.value = false
     } else {
       _dialogState.value = BookPlayDialogViewState.SleepTimer(SleepTimerViewState(sleepTimePref.value,isOngoingPref.value))
     }
