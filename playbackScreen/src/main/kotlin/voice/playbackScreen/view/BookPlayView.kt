@@ -107,6 +107,7 @@ private class BookPlayViewStatePreviewProvider : PreviewParameterProvider<BookPl
       skipSilence = true,
       sleepTime = 4.minutes,
       title = "Das Ende der Welt",
+      isOngoing = false,
     )
     yield(initial)
     yield(

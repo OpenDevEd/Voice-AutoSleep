@@ -99,6 +99,7 @@ class BookPlayViewModel
       playedTime = (book.content.positionInChapter - currentMark.startMs).milliseconds,
       cover = book.content.cover?.let(::ImmutableFile),
       skipSilence = book.content.skipSilence,
+      isOngoing = isOngoingPref.value,
     )
   }
 
@@ -198,15 +199,12 @@ class BookPlayViewModel
           batteryOptimization.onBatteryOptimizationsRequested()
         }
       }
-
-    }
-    else{
-      if(sleepTimer.sleepTimerActive())
+      if(isOngoingPref.value)
       {
         Logger.i("sleeping for ${sleepTimer.leftSleepTimeFlow.value}")
-        if(sleepTimer.leftSleepTimeFlow.value <= 15.minutes) {
-          sleepTimer.setActive(15.minutes)
-        }
+
+        sleepTimer.setActive(15.minutes)
+
       }
     }
     player.playPause()
